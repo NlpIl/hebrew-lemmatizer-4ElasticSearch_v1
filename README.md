@@ -34,11 +34,11 @@
 
 כאמור, למודל יש מספר גרסאות ואנו ערכנו בדיקות דיוק ובדיקות מהירות בתצורות שונות, למודל ה-TINY, המאפשר הרצה על שרת רגיל ללא צורך בGPU. קיבלנו בהן את הערכים [הבאים]([url](https://drive.google.com/file/d/16DBh0EFsnIkTPvLKvZEOGhAyMuT2Tatj/view)):
 [
-&lt;טבלת הבדיקות&gt;
+טבלת הבדיקות
 ](https://drive.google.com/file/d/16DBh0EFsnIkTPvLKvZEOGhAyMuT2Tatj/view)
 אורך ה-batch המקסימלי הינו 512 תווים.
 
-דף הדגמה ונסיון נמצא [כאן]([url](https://heb.korra.ai:8080/))
+דף הדגמה ונסיון נמצא [כאן]([url](http://heb.korra.ai:8080/))
 
 ## הוראות התקנה ושימוש :
 
