@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+
+  es01:
+    container_name: es1
+    build: elasticsearch
+    restart: unless-stopped
+    environment:
+     - "ES_JAVA_OPTS=-Xms8g -Xmx8g -Djava.security.manager -Djava.security.policy=/usr/share/elasticsearch/jdk/conf/security/plugin.policy"
+     - discovery.type=single-node
+     - xpack.security.enabled=false
+    volumes:
+     - ./data/elastic:/usr/share/elasticsearch/data
+    ports:
+     - 9200:9200
+
+  dicta:
+    container_name: dicta
+    build: dicta
+    restart: unless-stopped
+    volumes:
+      - ./models/huggingface:/home/appuser/.cache/huggingface
+    ports:
+      - 8000:8000

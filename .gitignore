@@ -1,0 +1,6 @@
+*/.gradle/*
+*/build/*
+*/bin/*
+data/*
+models/huggingface/*
+*.pyc
