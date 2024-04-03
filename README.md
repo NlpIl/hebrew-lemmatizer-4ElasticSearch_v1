@@ -38,7 +38,7 @@
 ](https://drive.google.com/file/d/16DBh0EFsnIkTPvLKvZEOGhAyMuT2Tatj/view)
 אורך ה-batch המקסימלי הינו 512 תווים.
 
-דף הדגמה ונסיון נמצא [כאן]([url](http://heb.korra.ai:8080/))
+דף הדגמה ונסיון נמצא [כאן]([url](http://heb.korra.ai:8080/)): http://heb.korra.ai:8080/
 
 ## הוראות התקנה ושימוש :
 
