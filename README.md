@@ -44,15 +44,19 @@
 
 1.יש לוודא שמותקן JDK . מומלץ להשתמש בגרסה 19 וגם gradle גרסה 8.4 
 <BR/><BR/>
-2.יש לבנות את הפלאגין stopwords ו lemmas כדי לחבר אותם לElastic. ניתן להעזר בקובץ build.sh . קובץ זה יעלה שני קונטיינרים:
+2.כדאי להריץ Dicta במוכנה אחרת יש להגדיר משתנה ENV בשם MY_HOST_PERMISSION שהערך שלו מהצורה "http://IP:Port/lemmas" בשתי מקומות: המכונה שעליו רץ Elastic קונטינר ו- Elastic Docker Image .יש לוודא שברגע שמחליטים להשתמש ב port שונה מ 8000 צריך לחליף את ה Port ב Dicta Docker Image לאותו Port הגדרנו ב MY_HOST_PERMISSION.כדאי להעזר בקובץ build.sh
+
+3.יש לבנות את הפלאגין stopwords ו lemmas כדי לחבר אותם לElastic. ניתן להעזר בקובץ build.sh . קובץ זה יעלה שני קונטיינרים:
 <BR/>
  א dicta - אחראי על חלקות הטקסט למשפטים ושליחת batches בגודל 16 . אפשר לשנות את הגודל בקובץ dicta/src/lemmatization.py
 <BR/>
  ב es0 - קונטיינר המריץ Elasticsearch עם  node בודד. ניתן להשתמש ביותר מ node אחד כמובן.
 <BR/><BR/>
-3.מצורפת דוגמת שימוש בקובץ plugin_test.py.
+4.מצורפת דוגמת שימוש בקובץ plugin_test.py.
 
 #### הערות:
 1. יש לוודא של git lfs מותקן לפני ה-clone .
 2. גודל JVM ב docker-compose.yml הוא 512M אבל אפשר להגדיל אותו עבור מחשבים חזקים.
 3. מודל dicta-tiny מבוסס על cpu לכן ככל שמקצים לו יותר cpu זמן העיבוד הולך וקטן. עם זאת, מנסיוננו הוספת מעבדים מעל 8 אינה משפרת את המהירות.
+   
+   
