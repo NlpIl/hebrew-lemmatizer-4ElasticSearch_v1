@@ -7,12 +7,12 @@ grant {
     permission java.security.SecurityPermission "setProperty.networkaddress.cache.negative.ttl";
     permission java.security.SecurityPermission "setProperty.policy.expandProperties";
     permission java.lang.RuntimePermission "createSecurityManager";
+    permission java.security.SecurityPermission "getPolicy";
     permission java.lang.RuntimePermission "getClassLoader";
     permission java.lang.RuntimePermission "accessDeclaredMembers";
     permission java.lang.RuntimePermission "accessClassInPackage.sun.misc";
     permission java.lang.reflect.ReflectPermission "suppressAccessChecks";
     permission java.lang.RuntimePermission "setSecurityManager";
-    permission java.net.URLPermission "http://dicta:8000/lemmas", "POST:Accept,Content-Type";
     // Add other necessary permissions
 };
 
@@ -20,5 +20,3 @@ grant codeBase "jrt:/ai.korra" {
   permission java.net.URLPermission "http:*", "*:*";
   permission java.net.SocketPermission "*", "connect,resolve";
 };
-
-

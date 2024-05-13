@@ -1,5 +1,5 @@
 FROM docker.elastic.co/elasticsearch/elasticsearch:8.7.0
-
+ENV MY_HOST_PERMISSION "http://dicta:8000/lemmas"
 COPY plugin.policy /usr/share/elasticsearch/jdk/conf/security/
 
 COPY heb-lemmas-plugin-1.0-SNAPSHOT.zip /usr/share/elasticsearch/

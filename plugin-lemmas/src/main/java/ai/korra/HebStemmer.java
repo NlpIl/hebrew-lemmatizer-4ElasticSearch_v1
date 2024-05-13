@@ -8,6 +8,8 @@ import java.net.http.HttpResponse;
 public class HebStemmer {
     protected String stem(String term)
     {
+        String host = System.getenv("MY_HOST_PERMISSION");
+
         // create a client
         System.out.println("Heb stemmer input : " +term);
         var client = HttpClient.newBuilder()
@@ -16,7 +18,7 @@ public class HebStemmer {
 
         // create a request
         var request = HttpRequest.newBuilder()
-                .uri(URI.create("http://dicta:8000/lemmas"))
+                .uri(URI.create(host))
                 .header("accept", "*/*")
                 .header("Content-Type", "text/plain;charset=UTF-8")
                 .POST(HttpRequest.BodyPublishers.ofString(term))
