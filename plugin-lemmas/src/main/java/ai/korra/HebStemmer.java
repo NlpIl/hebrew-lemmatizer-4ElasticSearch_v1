@@ -9,7 +9,12 @@ public class HebStemmer {
     protected String stem(String term)
     {
         String host = System.getenv("MY_HOST_PERMISSION");
+        
+        if (host == null) {
+            host = "http://dicta:8000/lemmas";
+        };
 
+        System.out.println("Heb stemmer host : " +host);
         // create a client
         System.out.println("Heb stemmer input : " +term);
         var client = HttpClient.newBuilder()
