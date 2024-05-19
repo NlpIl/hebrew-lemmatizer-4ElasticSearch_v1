@@ -67,5 +67,18 @@
    * יש לעדכן את כתובת הDICTA בשני מקומות: גם כמשתנה סביבה וגם בתוך הקובץ plugin.policy אשר מצוי בתוך תיקיית /usr/share/elastic/jdk/conf/security
 7.  
 
+### התקנה בעזרת Images:
+
+1. העתיקו את הקובץ docker-compose-images.yml
+2. צרו את התיקיות data/elastic ו- models/huggingface
+3. הריצו docker compose -f docker-compose-images.yml build 
+4. הריצו docker compose -f docker-compose-images.yml up -d
+5. ניתן לוודא שהפלאגין עובד ע"י
+curl -X GET "http://localhost:9200/_analyze?pretty" -H "Content-Type: application/json" -d '{
+    "text": "חידושים כמו חיבור אינטרנט אלחוטי,טלפוניה ניידת, ושירותי ענן משנים את הפנייה שלנו אל העולם.",
+    "tokenizer": "whitespace",
+    "filter": ["heb_lemmas", "heb_stopwords"]
+    }'
+
    
    
