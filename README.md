@@ -74,6 +74,7 @@
 3. הריצו docker compose -f docker-compose-images.yml build 
 4. הריצו docker compose -f docker-compose-images.yml up -d
 5. ניתן לוודא שהפלאגין עובד ע"י
+
 curl -X GET "http://localhost:9200/_analyze?pretty" -H "Content-Type: application/json" -d '{
     "text": "חידושים כמו חיבור אינטרנט אלחוטי,טלפוניה ניידת, ושירותי ענן משנים את הפנייה שלנו אל העולם.",
     "tokenizer": "whitespace",
