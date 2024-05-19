@@ -1,0 +1,24 @@
+services:
+
+  es01:
+    container_name: es01
+    image: korraai/elasticsearch:v1.1
+    restart: unless-stopped
+    environment:
+     - "ES_JAVA_OPTS=-Xms512m -Xmx512m -Djava.security.manager -Djava.security.policy=/usr/share/elasticsearch/jdk/conf/security/plugin.policy"
+     - discovery.type=single-node
+     - xpack.security.enabled=false
+     - MY_HOST_PERMISSION="http://dicta:8000/lemmas"
+    volumes:
+     - ./data/elastic:/usr/share/elasticsearch/data
+    ports:
+     - 9200:9200
+
+  dicta:
+    container_name: dicta
+    image: korraai/dicta-lemmatizer:v1.1
+    restart: unless-stopped
+    volumes:
+      - ./models/huggingface:/home/appuser/.cache/huggingface
+    ports:
+      - 8000:8000
