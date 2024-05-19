@@ -55,6 +55,7 @@
 #### הערות:
 <div dir="rtl">
 1. יש לוודא של git lfs מותקן לפני ה-clone .
+<div dir="rtl">
    
 3. גודל JVM ב docker-compose.yml הוא 512M אבל אפשר להגדיל אותו עבור מחשבים חזקים.
    
