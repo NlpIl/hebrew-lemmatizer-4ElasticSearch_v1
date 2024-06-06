@@ -10,7 +10,7 @@ public class HebStemmer {
     {
         String host = System.getenv("MY_HOST_PERMISSION");
         
-        if (host == null) {
+        if (host == null || host.trim().isEmpty()) {
             host = "http://dicta:8000/lemmas";
         };
 
