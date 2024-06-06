@@ -39,18 +39,36 @@
 אורך ה-batch המקסימלי הינו 512 תווים.
 
 דף הדגמה ונסיון נמצא [כאן]([url](http://heb.korra.ai:8080/)): http://heb.korra.ai:8080/
+<div dir="rtl">
+## הוראות התקנה ושימוש:<div dir="rtl">
+1. בצע git clone לרפוזיטורי זה<div dir="rtl">
+2. כדי להריץ Dicta במכונה אחרת או בקונטיינר שאינו מאזין על ברירת המחדל (שהינה http://dicta:8000) יש להגדיר על המכונה משתנה סביבה בשם MY_HOST_PERMISSION שהערך שלו מהצורה "http://IP:Port/lemmas" .יש לוודא שברגע שמחליטים להשתמש ב port שונה מ 8000 צריך לחליף את ה Port בDOCKETFILE שיוצר את DICTA (תחת תיקיית dicta)  לאותו ה-Port אשר הגדרנו ב MY_HOST_PERMISSION. <BR> לצורך ההגדרה אפשר ליצור או להוסיף לקובץ בשם 
+/etc/environment את הגדרת MY_HOST_PERMISSION
+<div dir="rtl">
 
-## הוראות התקנה ושימוש :
-
-1.יש לוודא שמותקן JDK . מומלץ להשתמש בגרסה 19 וגם gradle גרסה 8.4 
-
-2.יש לבנות את הפלאגין stopwords ו lemmas כדי לחבר אותם לElastic. ניתן להעזר בקובץ build.sh . קובץ זה יעלה שני קונטיינרים:
+3. הרץ את install.sh מתוך bash
+ 
+4. הרצה זו מריצה שני קונטיינרים המוגדרים ב-docker-compose.yml
+ 
+קובץ זה יעלה שני קונטיינרים:
 <BR/>
  א dicta - אחראי על חלקות הטקסט למשפטים ושליחת batches בגודל 16 . אפשר לשנות את הגודל בקובץ dicta/src/lemmatization.py
 <BR/>
  ב es0 - קונטיינר המריץ Elasticsearch עם  node בודד. ניתן להשתמש ביותר מ node אחד כמובן.
 <BR/><BR/>
-4.מצורפת דוגמת שימוש בקובץ plugin_test.py.
+5. לבדיקה, מצורפת דוגמת שימוש בקובץ plugin_test.py.
+
+<div dir="rtl">
+## הוראות שינוי גרסה:
+1.יש לוודא שמותקן JDK . מומלץ להשתמש בגרסה 19 וגם gradle גרסה 8.4 
+2. צריף לשנות את גרסת אלסטיק במקומות הבאים:
+א. ב-Dockerfile שב elasticsearch
+ב. ב-plugin-lemmas
+/build.gradle
+ג. plugin-stopwords
+/build.gradle
+
+2.יש לבנות את הפלאגין stopwords ו lemmas כדי לחבר אותם לElastic ע"י הרצת build.sh . 
 
 #### הערות:
 <div dir="rtl">
@@ -60,12 +78,9 @@
    <div dir="rtl">
 3. מודל dicta-tiny מבוסס על cpu לכן ככל שמקצים לו יותר cpu זמן העיבוד הולך וקטן. עם זאת, מנסיוננו הוספת מעבדים מעל 8 אינה משפרת את המהירות.
    <div dir="rtl">
-4. כדי להריץ Dicta במכונה אחרת יש להגדיר על המכונה (אשר ממנה מריצים את build.sh) משתנה ENV בשם MY_HOST_PERMISSION שהערך שלו מהצורה "http://IP:Port/lemmas" .יש לוודא שברגע שמחליטים להשתמש ב port שונה מ 8000 צריך לחליף את ה Port בDOCKETFILE שיוצר את DICTA (תחת תיקיית dicta)  לאותו ה-Port אשר הגדרנו ב MY_HOST_PERMISSION.
-<div dir="rtl">
-5.  במידה ולא משתמשים בbuild.sh  אלא מריצים את אלאסטיק ישירות על המכונה, יש לבצע מספר שינויים לתהליך המתואר לעיל:
+4.  במידה ולא משתמשים בbuild.sh  אלא מריצים את אלאסטיק ישירות על המכונה, יש לבצע מספר שינויים לתהליך המתואר לעיל:
    * יש להתקין את הפלאגין ידנית ע"י העתקתו והרצת סקריפט התקנה (ניתן לראות את הפעולות בתוך הDOCKERFILE של es01)
-   * יש לעדכן את כתובת הDICTA בשני מקומות: גם כמשתנה סביבה וגם בתוך הקובץ plugin.policy אשר מצוי בתוך תיקיית /usr/share/elastic/jdk/conf/security
-7.  
+   * יש לעדכן את כתובת הDICTA בשני מקומות: גם כמשתנה סביבה וגם בתוך הקובץ plugin.policy אשר מצוי בתוך תיקיית /usr/share/elastic/jdk/conf/securit.  
 
 ### התקנה בעזרת Images:
 
