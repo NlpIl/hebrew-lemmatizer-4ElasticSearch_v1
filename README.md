@@ -46,9 +46,9 @@
 /etc/environment את הגדרת MY_HOST_PERMISSION
 <div dir="rtl">
 
-3. הרץ את install.sh מתוך bash
+3. הרץ את install.sh מתוך bash <div dir="rtl">
  
-4. הרצה זו מריצה שני קונטיינרים המוגדרים ב-docker-compose.yml
+4. הרצה זו מריצה שני קונטיינרים המוגדרים ב-docker-compose.yml <div dir="rtl">
  
 קובץ זה יעלה שני קונטיינרים:
 <BR/>
