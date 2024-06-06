@@ -45,11 +45,10 @@
 2. כדי להריץ Dicta במכונה אחרת או בקונטיינר שאינו מאזין על ברירת המחדל (שהינה http://dicta:8000) יש להגדיר על המכונה משתנה סביבה בשם MY_HOST_PERMISSION שהערך שלו מהצורה "http://IP:Port/lemmas" .יש לוודא שברגע שמחליטים להשתמש ב port שונה מ 8000 צריך לחליף את ה Port בDOCKETFILE שיוצר את DICTA (תחת תיקיית dicta)  לאותו ה-Port אשר הגדרנו ב MY_HOST_PERMISSION. <BR> לצורך ההגדרה אפשר ליצור או להוסיף לקובץ בשם 
 /etc/environment את הגדרת MY_HOST_PERMISSION
 <div dir="rtl">
-
 3. הרץ את install.sh מתוך bash <div dir="rtl">
- 
+ <div dir="rtl">
 4. הרצה זו מריצה שני קונטיינרים המוגדרים ב-docker-compose.yml <div dir="rtl">
- 
+ <div dir="rtl">
 קובץ זה יעלה שני קונטיינרים:
 <BR/>
  א dicta - אחראי על חלקות הטקסט למשפטים ושליחת batches בגודל 16 . אפשר לשנות את הגודל בקובץ dicta/src/lemmatization.py
