@@ -8,15 +8,17 @@ import java.net.http.HttpResponse;
 public class HebStemmer {
     protected String stem(String term)
     {
+        HebDebugger debugger = new HebDebugger();
         String host = System.getenv("KORRA_HEB_URL");
         
         if (host == null || host.trim().isEmpty()) {
             host = "http://dicta:8000/lemmas";
         };
 
-        System.out.println("Heb stemmer host : " +host);
+        debugger.debugPrint("Heb stemmer host : " +host);
         // create a client
-        System.out.println("Heb stemmer input : " +term);
+        String reversedText = new StringBuilder(term).reverse().toString();
+        debugger.debugPrint("Heb stemmer input : " + reversedText);
         var client = HttpClient.newBuilder()
                 .version(HttpClient.Version.HTTP_1_1)
                 .build();
@@ -31,13 +33,14 @@ public class HebStemmer {
 
         // use the client to send the request
         try {
+            debugger.debugPrint("Heb stemmer api call to dicta sent");
             long startTime = System.nanoTime();
             var response = client.send(request, HttpResponse.BodyHandlers.ofString());
             long endTime = System.nanoTime();
             long duration = endTime - startTime;
 
             long durationInMs = duration / 1000_000_000;
-            System.out.println("api call to dicta run time in seconds: " + durationInMs);
+            debugger.debugPrint("Heb stemmer api call to dicta run time in seconds: " + durationInMs);
 
             return response.body();
         } catch (Exception e) {

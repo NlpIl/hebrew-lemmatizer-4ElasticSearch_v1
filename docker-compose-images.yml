@@ -9,6 +9,8 @@ services:
      - discovery.type=single-node
      - xpack.security.enabled=false
      - KORRA_HEB_URL="http://dicta:8000/lemmas"
+     - KORRA_HEB_DEBUG=${KORRA_HEB_DEBUG}
+
     volumes:
      - ./data/elastic:/usr/share/elasticsearch/data
     ports:
