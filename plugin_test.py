@@ -46,7 +46,7 @@ Indexresponse = es.index(index="test_index", document=document)
 # a way to try what the plugins retrun 
 text = 'חידושים כמו חיבור אינטרנט אלחוטי,טלפוניה ניידת, ושירותי ענן משנים את הפנייה שלנו אל העולם.'
 
-url = "http://es01:9200/_analyze?pretty"
+url = "http://localhost:9200/_analyze?pretty"
 
 headers = {
     "Content-Type": "application/json"
