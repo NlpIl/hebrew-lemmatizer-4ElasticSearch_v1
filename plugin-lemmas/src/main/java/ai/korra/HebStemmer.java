@@ -8,7 +8,7 @@ import java.net.http.HttpResponse;
 public class HebStemmer {
     protected String stem(String term)
     {
-        String host = System.getenv("MY_HOST_PERMISSION");
+        String host = System.getenv("KORRA_HEB_URL");
         
         if (host == null || host.trim().isEmpty()) {
             host = "http://dicta:8000/lemmas";
