@@ -1,10 +1,10 @@
-if [ -z "$MY_HOST_PERMISSION" ]; then
+if [ -z "$KORRA_HEB_URL" ]; then
   echo "No permission string provided.Using defualt permission dicta:8000"
   else
   # Path to the policy file
   POLICY_FILE="./elasticsearch/plugin.policy"
   echo "grant {" >> $POLICY_FILE
-  echo "    permission java.net.URLPermission \"$MY_HOST_PERMISSION\", \"POST:Accept,Content-Type\";" >> $POLICY_FILE
+  echo "    permission java.net.URLPermission \"$KORRA_HEB_URL\", \"POST:Accept,Content-Type\";" >> $POLICY_FILE
   echo "};" >> $POLICY_FILE
   echo "Permission added to policy file."
 fi
