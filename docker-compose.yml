@@ -2,19 +2,85 @@ version: '3.4'
 
 services:
 
-  es01:
-    container_name: es1
+  esm0:  # Master node
+    container_name: esm0
     build: elasticsearch
     restart: unless-stopped
     environment:
-     - "ES_JAVA_OPTS=-Xms512m -Xmx512m -Djava.security.manager -Djava.security.policy=/usr/share/elasticsearch/jdk/conf/security/plugin.policy"
-     - discovery.type=single-node
-     - xpack.security.enabled=false
-     - MY_HOST_PERMISSION=${MY_HOST_PERMISSION}
+      - node.name=esm0
+      - node.roles=master,data
+      - discovery.seed_hosts=esm0
+      - cluster.name=docker-cluster
+      - cluster.initial_master_nodes=esm0
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g -Djava.security.manager -Djava.security.policy=/usr/share/elasticsearch/jdk/conf/security/plugin.policy"
+      - xpack.security.enabled=false
+      - path.data:/usr/share/elasticsearch/data/esm0
+      - KORRA_HEB_DEBUG=true
     volumes:
-     - ./data/elastic:/usr/share/elasticsearch/data
+      - ./data/esmaster00:/usr/share/elasticsearch/data/esm0
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 2048M
     ports:
-     - 9200:9200
+      - 9200:9200
+
+  esd1:  # Data node 1
+    container_name: esd1
+    build: elasticsearch
+    restart: unless-stopped
+    environment:
+      - node.name=esd1
+      - node.roles=data
+      - discovery.seed_hosts=esm0
+      - cluster.name=docker-cluster
+      - cluster.initial_master_nodes=esm0
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g -Djava.security.manager -Djava.security.policy=/usr/share/elasticsearch/jdk/conf/security/plugin.policy"
+      - xpack.security.enabled=false
+      - path.data:/usr/share/elasticsearch/data/esd1
+      - KORRA_HEB_DEBUG=true
+    volumes:
+      - ./data/esdata01:/usr/share/elasticsearch/data/esd1
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 2048M
+
+  esd2:  # Data node 2
+    container_name: esd2
+    build: elasticsearch
+    restart: unless-stopped
+    environment:
+      - node.name=esd2
+      - node.roles=data
+      - discovery.seed_hosts=esm0
+      - cluster.name=docker-cluster
+      - cluster.initial_master_nodes=esm0
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g -Djava.security.manager -Djava.security.policy=/usr/share/elasticsearch/jdk/conf/security/plugin.policy"
+      - xpack.security.enabled=false
+      - path.data:/usr/share/elasticsearch/data/esd2
+      - KORRA_HEB_DEBUG=true
+    volumes:
+      - ./data/esdata02:/usr/share/elasticsearch/data/esd2
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 2048M
 
   dicta:
     container_name: dicta
@@ -22,5 +88,10 @@ services:
     restart: unless-stopped
     volumes:
       - ./models/huggingface:/home/appuser/.cache/huggingface
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 2048M
     ports:
       - 8000:8000

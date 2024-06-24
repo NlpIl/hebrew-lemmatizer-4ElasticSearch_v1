@@ -1,10 +1,9 @@
 import requests
 import json
-from elasticsearch import Elasticsearch,helpers
+from elasticsearch import Elasticsearch
 
 def json_load(path, mode='r'):
     with open(path, mode) as reader:
-
         contents = json.load(reader)        
     return contents
 
@@ -17,36 +16,16 @@ text = '''אם נבחר לדבר על נושא הטכנולוגיה וההתפת
 בסיכום, יש להבין כי הטכנולוגיה מצויה בלב החיים המודרניים, והשפעתה משפיעה על רבים מיבני החיים שלנו, מהקשרים אישיים ועד לסגנונות העבודה והלמידה. האתגר הוא למצוא את האיזון הנכון ולהשתמש בטכנולוגיה לתועלת האדם ולשיפור איכות החיים.
 '''
 
-mappings_vectors = json_load('mappings_vectors_he.json')
+mappings = json_load('mappings_he.json')
 settings = json_load('settings_he.json')
-            
+
 try:
-    es = Elasticsearch("http://localhost:9200",request_timeout=1000)
+    es = Elasticsearch("http://localhost:9200", request_timeout=1000)
     print(es)
 except Exception as e:
     print(e)
 
-# Create an index
-try:
-    if(not es.indices.exists(index="test_index")):
-        response = es.indices.create(index="test_index", settings = settings,mappings=mappings_vectors)
-    print(response)
-except Exception as e:
-    print(e)
-    
-document = {
-                "text":  text,
-            }
-            
-
-
-# Indexing the document
-Indexresponse = es.index(index="test_index", document=document)
-
-# a way to try what the plugins retrun 
-text = 'חידושים כמו חיבור אינטרנט אלחוטי,טלפוניה ניידת, ושירותי ענן משנים את הפנייה שלנו אל העולם.'
-
-url = "http://es01:9200/_analyze?pretty"
+url = "http://localhost:9200/_analyze?pretty"
 
 headers = {
     "Content-Type": "application/json"
@@ -60,3 +39,18 @@ data = {
 
 response = requests.get(url, headers=headers, json=data)
 print(response.text)
+
+# Create an index
+if es.indices.exists(index="test_index"):
+    response = es.indices.delete(index="test_index")
+    print(response)
+response = es.indices.create(index="test_index", settings=settings, mappings=mappings)
+print(response)
+
+document = {
+    "text":  text,
+}
+
+# Indexing the document
+response = es.index(index="test_index", document=document)
+print(response)

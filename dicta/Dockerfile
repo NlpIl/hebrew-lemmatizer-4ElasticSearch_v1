@@ -1,5 +1,5 @@
 # For more information, please refer to https://aka.ms/vscode-docker-python
-FROM nvidia/cuda:11.8.0-cudnn8-runtime-ubuntu22.04
+FROM python:3.11.9-slim-bookworm
 
 # Keeps Python from generating .pyc files in the container
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -11,9 +11,6 @@ ENV PYTHONUNBUFFERED=1
 WORKDIR /code
 
 # Install requirements
-ENV DEBIAN_FRONTEND="noninteractive" 
-RUN apt-get update && apt-get install -y python3-pip
-
 COPY requirements.txt .
 RUN python3 -m pip install -r requirements.txt --no-cache-dir
 
