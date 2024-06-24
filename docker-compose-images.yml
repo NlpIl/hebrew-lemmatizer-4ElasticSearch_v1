@@ -8,7 +8,9 @@ services:
      - "ES_JAVA_OPTS=-Xms512m -Xmx512m -Djava.security.manager -Djava.security.policy=/usr/share/elasticsearch/jdk/conf/security/plugin.policy"
      - discovery.type=single-node
      - xpack.security.enabled=false
-     - MY_HOST_PERMISSION="http://dicta:8000/lemmas"
+     - KORRA_HEB_URL="http://dicta:8000/lemmas"
+     - KORRA_HEB_DEBUG=${KORRA_HEB_DEBUG}
+
     volumes:
      - ./data/elastic:/usr/share/elasticsearch/data
     ports:

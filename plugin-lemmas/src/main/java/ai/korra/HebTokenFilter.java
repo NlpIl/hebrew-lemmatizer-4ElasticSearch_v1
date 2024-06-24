@@ -18,7 +18,7 @@ import com.google.gson.reflect.TypeToken;
 public class HebTokenFilter extends TokenFilter {
 
     private HebStemmer stemmer = new HebStemmer();
-
+    private HebDebugger debugger = new HebDebugger();
     private final CharTermAttribute termAttr = addAttribute(CharTermAttribute.class);
     private final OffsetAttribute offsetAttr = addAttribute(OffsetAttribute.class);
 	  private final TypeAttribute typeAttr = addAttribute(TypeAttribute.class);
@@ -40,9 +40,11 @@ public class HebTokenFilter extends TokenFilter {
 
     @Override
     public boolean incrementToken() throws IOException {
-
+      debugger.debugPrint("HebTokenFilter.incrementToken started ");
       if (emitExtraToken) {
+        
         produceTerm();
+        debugger.debugPrint("HebTokenFilter.incrementToken finished with emitExtraToken");
         return true;
       }
 
@@ -65,21 +67,27 @@ public class HebTokenFilter extends TokenFilter {
       if (concatString.endsWith(" ")) {
         concatString = concatString.substring(0, concatString.length() - 1);
       }
+      //prrint concat String senteces
+      String reversedText = new StringBuilder(concatString).reverse().toString();
+      debugger.debugPrint("HebTokenFilter.incrementToken concated String : "+reversedText);
       String jsonString = stemmer.stem(concatString);
       Gson gson = new Gson();
       Type listType = new TypeToken<List<String>>() {}.getType();
       lemmaList = gson.fromJson(jsonString, listType);
-
+      //lemma list print
+      debugger.debugPrint("HebTokenFilter.incrementToken lemmaList : "+lemmaList);
       produceTerm();
+      debugger.debugPrint("HebTokenFilter.incrementToken finished ");
       return true;
 
     }
 
     private void produceTerm() {
+      debugger.debugPrint("HebTokenFilter.produceTerm called ");
       int origStart = offsetAttr.startOffset();
       int origEnd = offsetAttr.endOffset();
       String extraTerm = lemmaList.get(0);
-
+      debugger.debugPrint("HebTokenFilter.produceTerm extraTerm: "+extraTerm);
       offsetAttr.setOffset(origStart, origEnd);
       typeAttr.setType(typeAttr.type());
       termAttr.setEmpty().append(extraTerm);
@@ -91,6 +99,7 @@ public class HebTokenFilter extends TokenFilter {
       } else {
         emitExtraToken = true;
       }
+      debugger.debugPrint("HebTokenFilter.produceTerm finished ");
     }
 
 }

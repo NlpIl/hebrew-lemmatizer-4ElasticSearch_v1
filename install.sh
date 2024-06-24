@@ -9,13 +9,6 @@ if [ -z "$KORRA_HEB_URL" ]; then
   echo "Permission added to policy file."
 fi
 
-
-gradle -b plugin-lemmas/build.gradle bundlePlugin
-cp plugin-lemmas/build/distributions/heb-lemmas-plugin-1.0-SNAPSHOT.zip elasticsearch/
-
-gradle -b plugin-stopwords/build.gradle bundlePlugin
-cp plugin-stopwords/build/distributions/heb-stopwords-plugin-1.0-SNAPSHOT.zip elasticsearch/
-
 sudo docker compose -f docker-compose.yml down
 sudo rm -rf ./data
 sudo mkdir ./data

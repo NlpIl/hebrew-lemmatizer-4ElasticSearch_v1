@@ -13,7 +13,7 @@ grant {
     permission java.lang.RuntimePermission "accessClassInPackage.sun.misc";
     permission java.lang.reflect.ReflectPermission "suppressAccessChecks";
     permission java.lang.RuntimePermission "setSecurityManager";
-    permission java.lang.RuntimePermission "getenv.MY_HOST_PERMISSION";
+    permission java.lang.RuntimePermission "getenv.KORRA_HEB_URL";
     permission java.net.URLPermission "http://dicta:8000/lemmas", "POST:Accept,Content-Type";
     // Add other necessary permissions
 };
