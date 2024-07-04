@@ -1,0 +1,124 @@
+version: '3.4'
+
+services:
+
+  es00:  # Master node
+    container_name: esm0
+    build: elasticsearch
+    restart: unless-stopped
+    environment:
+      - node.name=esm0
+      - "ES_JAVA_OPTS=-Xms2g -Xmx2g -Djava.security.manager -Djava.security.policy=/usr/share/elasticsearch/jdk/conf/security/plugin.policy"
+      - node.roles=master,data
+      - xpack.security.enabled=false
+      - cluster.name=docker-cluster
+      - discovery.seed_hosts=esm0
+      - cluster.initial_master_nodes=esm0
+      - path.data:/usr/share/elasticsearch/data/esm0
+      - MY_HOST_PERMISSION="http://dicta:8000/lemmas"
+
+    volumes:
+      - ./data/esmaster00:/usr/share/elasticsearch/data/esm0
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+    ports:
+      - 9200:9200
+
+  es01:  # Data node 1
+    container_name: esd1
+    build: elasticsearch
+    restart: unless-stopped
+    environment:
+      - node.name=esd1
+      - node.roles=data
+      - discovery.seed_hosts=esm0
+      - cluster.name=docker-cluster
+      - cluster.initial_master_nodes=esm0
+      - "ES_JAVA_OPTS=-Xms2g -Xmx2g -Djava.security.manager -Djava.security.policy=/usr/share/elasticsearch/jdk/conf/security/plugin.policy"
+      - xpack.security.enabled=false
+      - path.data:/usr/share/elasticsearch/data/esd1
+      - network.host:localhost
+      - MY_HOST_PERMISSION="http://dicta1:8001/lemmas"
+
+    volumes:
+      - ./data/esdata01:/usr/share/elasticsearch/data/esd1
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+
+  es02:  # Data node 2
+    container_name: esd2
+    build: elasticsearch
+    restart: unless-stopped
+    environment:
+      - node.name=esd2
+      - node.roles=data
+      - discovery.seed_hosts=esm0
+      - cluster.name=docker-cluster
+      - cluster.initial_master_nodes=esm0
+      - "ES_JAVA_OPTS=-Xms2g -Xmx2g -Djava.security.manager -Djava.security.policy=/usr/share/elasticsearch/jdk/conf/security/plugin.policy"
+      - xpack.security.enabled=false
+      - path.data:/usr/share/elasticsearch/data/esd2
+      - MY_HOST_PERMISSION="http://dicta2:8002/lemmas"
+
+    volumes:
+      - ./data/esdata02:/usr/share/elasticsearch/data/esd2
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+
+  dicta:
+    container_name: dicta
+    build: dicta
+    restart: unless-stopped
+    volumes:
+      - ./models/huggingface:/home/appuser/.cache/huggingface
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+    ports:
+      - 8000:8000
+
+
+  dicta1:
+    container_name: dicta1
+    build: dicta1
+    restart: unless-stopped
+    volumes:
+      - ./models/huggingface:/home/appuser/.cache/huggingface
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+    ports:
+      - 8001:8001
+
+  dicta2:
+    container_name: dicta2
+    build: dicta2
+    restart: unless-stopped
+    volumes:
+      - ./models/huggingface:/home/appuser/.cache/huggingface
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+    ports:
+      - 8002:8002
